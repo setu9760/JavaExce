@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>FileParser.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;JavaExce&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">javaexce</a> &gt; <span class="el_source">FileParser.java</span></div><h1>FileParser.java</h1><pre class="source lang-java linenums">
+/*
+ * This class does not provide any setters as it might create unnecessary exception 
+ * if user explicitly tries to set unknown file using the setter.
+ * The files can only be set by using one of the two constructors provided. 
+ * This class also does not provide publc access to any getters as this 
+ * functionality is not requried outside the class.
+ */
+package javaexce;
+
+import java.io.*;
+import java.util.*;
+import java.util.logging.*;
+
+/**
+ *
+ * @author setu
+ */
+public class FileParser {
+
+    private File order_file;
+    private File person_file;
+    private File ordinary_file;
+<span class="fc" id="L24">    protected Boolean isFile = false;</span>
+
+    /**
+     * this is a default constructor it takes two files and parameters it checks
+     * these files for validity and assigns the private variables
+     *
+     * @param order_file
+     * @param person_file
+     */
+<span class="fc" id="L33">    public FileParser(File order_file, File person_file) {</span>
+<span class="fc bfc" id="L34" title="All 4 branches covered.">        if (order_file != null &amp;&amp; person_file != null) {</span>
+<span class="fc bfc" id="L35" title="All 4 branches covered.">            if (order_file.exists() &amp;&amp; order_file.isFile()) {</span>
+<span class="fc" id="L36">                this.order_file = order_file;</span>
+<span class="pc bpc" id="L37" title="1 of 4 branches missed.">                if (person_file.exists() &amp;&amp; person_file.isFile()) {</span>
+<span class="fc" id="L38">                    this.person_file = person_file;</span>
+<span class="fc" id="L39">                    isFile = true;</span>
+                } else {
+<span class="fc" id="L41">                    this.person_file = null;</span>
+<span class="fc" id="L42">                    isFile = false;</span>
+                }
+            } else {
+<span class="fc" id="L45">                this.order_file = null;</span>
+<span class="fc" id="L46">                this.person_file = null;</span>
+<span class="fc" id="L47">                isFile = false;</span>
+            }
+
+        } else {
+<span class="fc" id="L51">            this.order_file = null;</span>
+<span class="fc" id="L52">            this.person_file = null;</span>
+<span class="fc" id="L53">            isFile = false;</span>
+        }
+<span class="fc" id="L55">    }</span>
+
+    /**
+     * This constructor is for test purposes it can be used with other types of
+     * file, it will check the validity of the file and then assign it to the
+     * private variable
+     *
+     * @param ordinary_file
+     */
+<span class="fc" id="L64">    public FileParser(File ordinary_file) {</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        if (ordinary_file != null) {</span>
+<span class="fc bfc" id="L66" title="All 4 branches covered.">            if (ordinary_file.exists() &amp;&amp; ordinary_file.isFile()) {</span>
+<span class="fc" id="L67">                this.ordinary_file = ordinary_file;</span>
+<span class="fc" id="L68">                isFile = true;</span>
+            }
+        } else {
+<span class="fc" id="L71">            this.ordinary_file = null;</span>
+<span class="fc" id="L72">            isFile = false;</span>
+        }
+<span class="fc" id="L74">    }</span>
+
+    /**
+     * Order_file getter
+     *
+     * @return the order_file
+     */
+    private File getOrder_file() {
+<span class="fc" id="L82">        return order_file;</span>
+    }
+
+    /**
+     * @return the Person_file
+     */
+    private File getPerson_file() {
+<span class="fc" id="L89">        return person_file;</span>
+    }
+
+    /**
+     * @return the ordinary_file
+     */
+    private File getOrdinary_file() {
+<span class="fc" id="L96">        return ordinary_file;</span>
+    }
+
+    /**
+     *
+     * @return true if the content of the file is parsed successfully, false if
+     * file is not valid or empty file or in case of SQLException
+     */
+    public boolean order_parser() {
+<span class="fc" id="L105">        ArrayList&lt;Order&gt; orders = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        if (isFile) {</span>
+            try {
+<span class="fc" id="L108">                Scanner scanner = new Scanner(getOrder_file());</span>
+                //Header line from the CSV file which is not used in execution
+<span class="fc bfc" id="L110" title="All 2 branches covered.">                if (scanner.hasNext()) {</span>
+                    @SuppressWarnings(&quot;UnusedAssignment&quot;)
+<span class="fc" id="L112">                    String line = scanner.nextLine();</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">                    while (scanner.hasNext()) {</span>
+
+<span class="fc" id="L115">                        line = scanner.nextLine();</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">                        if (!line.isEmpty()) {</span>
+<span class="fc" id="L117">                            String[] row = line.split(&quot;\\|&quot;);</span>
+<span class="fc" id="L118">                            Order order = new Order(Integer.parseInt(row[0]), Integer.parseInt(row[1]), Integer.parseInt(row[2]));</span>
+<span class="fc" id="L119">                            System.out.println(order.toString());</span>
+<span class="fc" id="L120">                            orders.add(order);</span>
+<span class="fc" id="L121">                        }</span>
+                    }
+<span class="fc" id="L123">                    DataLayer.create_order(orders);</span>
+<span class="fc" id="L124">                    return true;</span>
+                } else {
+<span class="fc" id="L126">                    return false;</span>
+                }
+
+<span class="nc" id="L129">            } catch (FileNotFoundException ex) {</span>
+<span class="nc" id="L130">                Logger.getLogger(FileParser.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L131">                return false;</span>
+            }
+        } else {
+<span class="fc" id="L134">            System.out.println(&quot;Order is not valid file&quot;);</span>
+<span class="fc" id="L135">            return false;</span>
+        }
+    }
+
+    /**
+     *
+     * @return true if the content of the file is parsed successfully, false if
+     * file is not valid or empty file or in case of SQLException
+     */
+    public boolean person_parser() {
+<span class="fc" id="L145">        ArrayList&lt;Person&gt; persons = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">        if (isFile) {</span>
+            try {
+<span class="fc" id="L148">                Scanner scanner = new Scanner(getPerson_file());</span>
+                //Header line from the CSV file which is not used in the execution
+<span class="fc bfc" id="L150" title="All 2 branches covered.">                if (scanner.hasNext()) {</span>
+                    @SuppressWarnings(&quot;UnusedAssignment&quot;)
+<span class="fc" id="L152">                    String line = scanner.nextLine();</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">                    while (scanner.hasNext()) {</span>
+<span class="fc" id="L154">                        line = scanner.nextLine();</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">                        if (!line.isEmpty()) {</span>
+<span class="fc" id="L156">                            String[] row = line.split(&quot;,&quot;);</span>
+<span class="fc" id="L157">                            Person person = new Person(Integer.parseInt(row[0]), row[1], row[2], row[3], row[4]);</span>
+<span class="fc" id="L158">                            System.out.println(person.toString());</span>
+<span class="fc" id="L159">                            persons.add(person);</span>
+<span class="fc" id="L160">                        }</span>
+                    }
+<span class="fc" id="L162">                    DataLayer.create_person(persons);</span>
+<span class="fc" id="L163">                    return true;</span>
+                } else {
+<span class="fc" id="L165">                    return false;</span>
+                }
+<span class="nc" id="L167">            } catch (FileNotFoundException ex) {</span>
+<span class="nc" id="L168">                Logger.getLogger(FileParser.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L169">                return false;</span>
+            }
+        } else {
+<span class="fc" id="L172">            System.out.println(&quot;person is not valid file&quot;);</span>
+<span class="fc" id="L173">            return false;</span>
+        }
+    }
+
+    /**
+     * This method is for testing purpose only It reads any file and prints it's
+     * contents in the output consol. It uses buffered-reader and string-builder
+     * classes to achieve the functionality.
+     *
+     * @return true if the content of the file is successfully parsed into
+     * StringBuilder, false if invalid/empty file or incase of
+     * FileNotFoundException of IOException
+     */
+    public boolean ordinary_parser() {
+<span class="fc bfc" id="L187" title="All 2 branches covered.">        if (isFile) {</span>
+            try {
+<span class="fc" id="L189">                BufferedReader reader = new BufferedReader(new FileReader(getOrdinary_file().toString()));</span>
+<span class="fc" id="L190">                StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">                if (reader.ready()) {</span>
+                    String line;
+<span class="fc bfc" id="L193" title="All 2 branches covered.">                    while ((line = reader.readLine()) != null) {</span>
+<span class="fc" id="L194">                        sb.append(line);</span>
+<span class="fc" id="L195">                        sb.append(System.lineSeparator());</span>
+                    }
+<span class="fc" id="L197">                    System.out.println(sb.toString());</span>
+<span class="fc" id="L198">                    return true;</span>
+                } else {
+<span class="fc" id="L200">                    System.out.println(&quot;file is empty&quot;);</span>
+<span class="fc" id="L201">                    return false;</span>
+                }
+<span class="nc" id="L203">            } catch (FileNotFoundException ex) {</span>
+<span class="nc" id="L204">                Logger.getLogger(FileParser.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L205">                return false;</span>
+<span class="nc" id="L206">            } catch (IOException ex) {</span>
+<span class="nc" id="L207">                Logger.getLogger(FileParser.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L208">                return false;</span>
+            }
+        } else {
+<span class="fc" id="L211">            return false;</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.4.201312101107</span></div></body></html>

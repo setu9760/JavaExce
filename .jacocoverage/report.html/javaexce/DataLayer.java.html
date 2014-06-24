@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DataLayer.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;JavaExce&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">javaexce</a> &gt; <span class="el_source">DataLayer.java</span></div><h1>DataLayer.java</h1><pre class="source lang-java linenums">/**
+ * This is a DataLayer class which is used to perform all actions to the
+ * database. The methods used in this class are static.
+ */
+package javaexce;
+
+import java.sql.*;
+import java.util.*;
+import java.util.logging.*;
+
+/**
+ *
+ * @author setu
+ */
+public class DataLayer {
+
+    private static Connection conn;
+
+    /*
+     * Below are the database credential to make connection to the database.
+     * This credential differ on each machine as per the set up by the machine user.
+     * While running the programm on different machine all or some of this 
+     * credentials might have to be modified for the program to execute correctly.
+     */
+    /* ********DATABASE CREDENTIAL DECLERATION****************** */
+    /**
+     * This is the url to where the database is found. While developing the
+     * program WAMP localhost service was used.
+     */
+    private static final String dburl = &quot;jdbc:mysql://localhost/Javaexec&quot;;
+
+    /**
+     * This is the phpMyAdmin user name.
+     */
+    private static final String user = &quot;root&quot;;
+
+    /**
+     * This is the password to access the database for above defined user.
+     */
+    private static final String password = &quot;sdesai&quot;;
+
+    /* ***********END OF DATABASE CREDENTIAL DECLERATION.********** */
+    /**
+     * size is a static variable used to determine the number of rows returned
+     * as result from the database. This variable is set to 0 initially and s
+     * increased by one in each iteration while fetching result from the
+     * resultSet.
+     *
+     * @see DataLayer#get_atleast_1_order()
+     * @see DataLayer#get_orders_with_fname()
+     */
+<span class="fc" id="L52">    protected static int size = 0;</span>
+
+    /**
+     *
+     */
+<span class="nc" id="L57">    public DataLayer() {</span>
+<span class="nc" id="L58">    }</span>
+
+    /**
+     * Static method which initialises the connection to the database or catches
+     * SQLException if not successful
+     *
+     * @return true if connection is successful, false otherwise.
+     */
+    public static boolean initConnection() {
+        try {
+
+<span class="fc" id="L69">            conn = DriverManager.getConnection(dburl, user, password);</span>
+<span class="fc" id="L70">            return true;</span>
+<span class="nc" id="L71">        } catch (SQLException e) {</span>
+<span class="nc" id="L72">            Logger.getLogger(FileParser.class.getName()).log(Level.SEVERE, null, e);</span>
+<span class="nc" id="L73">            return false;</span>
+        }
+    }
+
+    /**
+     * This method is called from order_file() method of FileParser class, the
+     * list of Order is dynamically created from appropriate file read by parser
+     * class and is passed to this method. this method then checks the list
+     * against null or isEmpty method, if not the data is inserted into the
+     * database table
+     *
+     * @param orders list of Order objects
+     * @return true if the execution of SQL query is successful, false otherwise
+     * @see javaexce.FileParser#order_parser()
+     */
+    public static boolean create_order(ArrayList&lt;Order&gt; orders) {
+<span class="fc bfc" id="L89" title="All 4 branches covered.">        if (orders == null || orders.isEmpty()) {</span>
+<span class="fc" id="L90">            return false;</span>
+        } else {
+            try {
+<span class="fc" id="L93">                Statement s = conn.createStatement();</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">                for (Order order : orders) {</span>
+<span class="fc" id="L95">                    String query = String.format(&quot;INSERT INTO `order` (Order_ID, Order_Number, Person_ID) VALUES ('%d', '%d', '%d');&quot;,</span>
+                            order.getOrder_ID(), order.getOrder_Number(), order.getPerson_ID());
+<span class="fc" id="L97">                    s.execute(query);</span>
+
+<span class="fc" id="L99">                }</span>
+<span class="fc" id="L100">                return true;</span>
+<span class="nc" id="L101">            } catch (SQLException ex) {</span>
+<span class="nc" id="L102">                Logger.getLogger(DataLayer.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L103">                return false;</span>
+            }
+        }
+    }
+
+    /**
+     * This method is called from person_parser() method of FileParser class,
+     * The list of Person is dynamically created from appropriate file read by
+     * parser class and is passed to this method. This method then checks the
+     * list against null or isEmpty method, if not the data is inserted into the
+     * database table Person
+     *
+     * @param persons list of Person objects
+     * @return true if the execution of SQL query is successful, false otherwise
+     * @see javaexce.FileParser#person_parser()
+     */
+    public static boolean create_person(ArrayList&lt;Person&gt; persons) {
+<span class="fc bfc" id="L120" title="All 4 branches covered.">        if (persons == null || persons.isEmpty()) {</span>
+<span class="fc" id="L121">            return false;</span>
+        } else {
+            try {
+<span class="fc" id="L124">                Statement s = conn.createStatement();</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">                for (Person person : persons) {</span>
+<span class="fc" id="L126">                    String query = String.format(&quot;INSERT INTO `Person` (Person_ID, First_name, Last_name, Street, City) VALUES &quot;</span>
+                            + &quot;('%d', '%s', '%s', '%s', '%s')&quot;,
+                            person.getPerson_ID(), person.getFirst_name(), person.getLast_name(), person.getStreet(), person.getCity());
+<span class="fc" id="L129">                    s.execute(query);</span>
+<span class="fc" id="L130">                }</span>
+<span class="fc" id="L131">                return true;</span>
+<span class="nc" id="L132">            } catch (SQLException e) {</span>
+<span class="nc" id="L133">                Logger.getLogger(DataLayer.class.getName()).log(Level.SEVERE, null, e);</span>
+<span class="nc" id="L134">                return false;</span>
+            }
+        }
+    }
+
+    /**
+     * This method fetches all the details of a person from person_id where
+     * there is at-least one order placed by the person. This method fetches
+     * four fields from two tables; Order_ID, Order_number, Person_ID and
+     * First_name.
+     *
+     * @return true if the request from database is successful, false otherwise
+     */
+    public static boolean get_atleast_1_order() {
+        try {
+<span class="fc" id="L149">            size = 0;</span>
+<span class="fc" id="L150">            Statement s = conn.createStatement();</span>
+<span class="fc" id="L151">            String query = String.format(&quot;SELECT order.Order_ID, order.Order_number, Person.Person_ID, Person.First_name\n&quot;</span>
+                    + &quot;FROM  `order` &quot;
+                    + &quot;INNER JOIN  `Person` ON order.Person_ID = Person.Person_ID &quot;
+                    + &quot;ORDER BY order.Order_ID&quot;);
+<span class="fc" id="L155">            s.executeQuery(query);</span>
+<span class="fc" id="L156">            ResultSet result = s.getResultSet();</span>
+<span class="fc" id="L157">            List&lt;String[]&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">            while (result.next()) {</span>
+<span class="fc" id="L159">                list.add(new String[]{result.getString(1), result.getString(2), result.getString(3), result.getString(4)});</span>
+<span class="fc" id="L160">                size++;</span>
+            }
+<span class="fc" id="L162">            convert(list);</span>
+<span class="fc" id="L163">            System.out.println(size + &quot; people have atleast one order&quot;);</span>
+
+<span class="fc" id="L165">            return true;</span>
+<span class="nc" id="L166">        } catch (SQLException e) {</span>
+<span class="nc" id="L167">            Logger.getLogger(DataLayer.class.getName()).log(Level.SEVERE, null, e);</span>
+<span class="nc" id="L168">            return false;</span>
+        }
+    }
+
+    /**
+     * This method returns names of the person with any orders placed the data
+     * is sorted by the first names of the persons. This method fetches three
+     * fields from two tables; First_name, Last_name and Order_ID.
+     *
+     * @return true if the request from database is successful, false otherwise.
+     */
+    public static boolean get_orders_with_fname() {
+        try {
+<span class="fc" id="L181">            size = 0;</span>
+<span class="fc" id="L182">            Statement s = conn.createStatement();</span>
+<span class="fc" id="L183">            String query = String.format(&quot;SELECT Person.First_name, Person.Last_name, order.Order_ID &quot;</span>
+                    + &quot;FROM `Person` INNER JOIN `order` &quot;
+                    + &quot;ON Person.Person_ID=order.Person_ID &quot;
+                    + &quot;ORDER BY Person.First_name;&quot;);
+<span class="fc" id="L187">            s.executeQuery(query);</span>
+<span class="fc" id="L188">            ResultSet result = s.getResultSet();</span>
+<span class="fc" id="L189">            List&lt;String[]&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">            while (result.next()) {</span>
+<span class="fc" id="L191">                list.add(new String[]{result.getString(1), result.getString(2), result.getString(3)});</span>
+<span class="fc" id="L192">                size++;</span>
+            }
+<span class="fc" id="L194">            convert(list);</span>
+<span class="fc" id="L195">            System.out.println(&quot;Orders with first name of &quot; + size + &quot; people&quot;);</span>
+
+<span class="fc" id="L197">            return true;</span>
+<span class="nc" id="L198">        } catch (SQLException e) {</span>
+<span class="nc" id="L199">            Logger.getLogger(DataLayer.class.getName()).log(Level.SEVERE, null, e);</span>
+<span class="nc" id="L200">            return false;</span>
+        }
+    }
+
+    /**
+     * This method is mostly used in test cases as during testing the data in
+     * database needs to be modified repeatedly. This method can be used in main
+     * method as well. **Important** This method will erase all data from the
+     * database therefore it is not recommended to use it in the main method
+     *
+     * @return true if both queries executed successfully, false when
+     * SQLException occurs.
+     */
+    public static boolean flush_data() {
+        try {
+<span class="fc" id="L215">            Statement s = conn.createStatement();</span>
+<span class="fc" id="L216">            String query1 = String.format(&quot;DELETE FROM `Person`;&quot;);</span>
+<span class="fc" id="L217">            String query2 = String.format(&quot;DELETE FROM `order`;&quot;);</span>
+<span class="fc" id="L218">            s.execute(query1);</span>
+<span class="fc" id="L219">            s.execute(query2);</span>
+<span class="fc" id="L220">            return true;</span>
+<span class="nc" id="L221">        } catch (SQLException e) {</span>
+<span class="nc" id="L222">            Logger.getLogger(DataLayer.class.getName()).log(Level.SEVERE, null, e);</span>
+<span class="nc" id="L223">            return false;</span>
+        }
+    }
+
+    /**
+     * This method returns the content of the file in two dimensional array of
+     * String which can be easily read or printed in tabular format.
+     *
+     * @param list of database result row in form of array of String
+     * @return two dimensional array of result
+     */
+    private static String[][] convert(List&lt;String[]&gt; list) {
+<span class="pc bpc" id="L235" title="1 of 4 branches missed.">        if (list == null || list.isEmpty()) {</span>
+<span class="fc" id="L236">            return new String[][]{};</span>
+        }
+<span class="fc" id="L238">        String[][] output = new String[list.size()][list.get(0).length];</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">        for (int i = 0; i &lt; list.size(); i++) {</span>
+<span class="fc" id="L240">            output[i] = list.get(i);</span>
+        }
+<span class="fc bfc" id="L242" title="All 2 branches covered.">        for (String[] strings : output) {</span>
+<span class="fc" id="L243">            System.out.println(Arrays.toString(strings));</span>
+        }
+<span class="fc" id="L245">        return output;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.4.201312101107</span></div></body></html>

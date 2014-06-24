@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Order.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;JavaExce&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">javaexce</a> &gt; <span class="el_source">Order.java</span></div><h1>Order.java</h1><pre class="source lang-java linenums">
+/*
+ * 
+ */
+package javaexce;
+
+/**
+ *
+ * @author setu
+ */
+public class Order {
+
+    private int Order_ID;
+    private int Order_Number;
+    private int Person_ID;
+
+    /**
+     *
+     * @param Order_ID
+     * @param Order_Number
+     * @param Person_ID
+     */
+<span class="fc" id="L23">    public Order(int Order_ID, int Order_Number, int Person_ID) {</span>
+<span class="fc" id="L24">        this.Order_ID = Order_ID;</span>
+<span class="fc" id="L25">        this.Order_Number = Order_Number;</span>
+<span class="fc" id="L26">        this.Person_ID = Person_ID;</span>
+<span class="fc" id="L27">    }</span>
+
+    /**
+     * @return the Order_ID
+     */
+    public int getOrder_ID() {
+<span class="fc" id="L33">        return Order_ID;</span>
+    }
+
+    /**
+     * @param Order_ID the Order_ID to set
+     */
+    public void setOrder_ID(int Order_ID) {
+<span class="fc" id="L40">        this.Order_ID = Order_ID;</span>
+<span class="fc" id="L41">    }</span>
+
+    /**
+     * @return the Order_Number
+     */
+    public int getOrder_Number() {
+<span class="fc" id="L47">        return Order_Number;</span>
+    }
+
+    /**
+     * @param Order_Number the Order_Number to set
+     */
+    public void setOrder_Number(int Order_Number) {
+<span class="fc" id="L54">        this.Order_Number = Order_Number;</span>
+<span class="fc" id="L55">    }</span>
+
+    /**
+     * @return the Person_ID
+     */
+    public int getPerson_ID() {
+<span class="fc" id="L61">        return Person_ID;</span>
+    }
+
+    /**
+     * @param Person_ID the Person_ID to set
+     */
+    public void setPerson_ID(int Person_ID) {
+<span class="fc" id="L68">        this.Person_ID = Person_ID;</span>
+<span class="fc" id="L69">    }</span>
+
+    /**
+     * This method Overrides the toString method of Object class. It creates
+     * visual representation as String object of Order class.
+     *
+     * @return String object with the complete details of the object.
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L79">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L80">        sb.append(&quot;---------------------&quot;)</span>
+                .append(System.lineSeparator())
+                .append(&quot;Order ID: &quot;).append(Order_ID)
+                .append(System.lineSeparator())
+                .append(&quot;Order number: &quot;).append(Order_Number)
+                .append(System.lineSeparator())
+                .append(&quot;Person ID: &quot;).append(Person_ID);
+<span class="fc" id="L87">        return sb.toString();</span>
+    }
+
+    /**
+     * This method Overrides equals method of Object class. This method checks
+     * the params 'obj' against null or instance or Order class then checks the
+     * object for their elements. This method uses Overridden hashCode method
+     * for this functionality.
+     *
+     * @param obj
+     * @return true if same or similar object with same elements, false if null,
+     * non-similar/same or similar object with different elements.
+     */
+    @Override
+    public boolean equals(Object obj) {
+<span class="fc bfc" id="L102" title="All 4 branches covered.">        if (obj == null || !(obj instanceof Order)) {</span>
+<span class="fc" id="L103">            return false;</span>
+        } else {
+<span class="fc bfc" id="L105" title="All 2 branches covered.">            if (obj == this) {</span>
+<span class="fc" id="L106">                return true;</span>
+            } else {
+<span class="fc bfc" id="L108" title="All 2 branches covered.">                return obj.hashCode() == this.hashCode();</span>
+            }
+        }
+    }
+
+    /**
+     * This method Overrides hashCode method of Object class. It calculates the
+     * hash value from the elements of the object.
+     *
+     * @return hash
+     */
+    @Override
+    public int hashCode() {
+<span class="fc" id="L121">        int hash = 5;</span>
+<span class="fc" id="L122">        hash = 41 * hash + this.Order_ID;</span>
+<span class="fc" id="L123">        hash = 41 * hash + this.Order_Number;</span>
+<span class="fc" id="L124">        hash = 41 * hash + this.Person_ID;</span>
+<span class="fc" id="L125">        return hash;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.4.201312101107</span></div></body></html>

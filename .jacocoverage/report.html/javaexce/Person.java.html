@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Person.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;JavaExce&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">javaexce</a> &gt; <span class="el_source">Person.java</span></div><h1>Person.java</h1><pre class="source lang-java linenums">
+/*
+ * 
+ */
+package javaexce;
+
+import java.util.Objects;
+
+/**
+ *
+ * @author setu
+ */
+public class Person {
+
+    private int Person_ID;
+    private String First_name;
+    private String Last_name;
+    private String Street;
+    private String City;
+
+    /**
+     *
+     * @param Person_ID
+     * @param First_name
+     * @param Last_name
+     * @param Street
+     * @param City
+     */
+<span class="fc" id="L29">    public Person(int Person_ID, String First_name, String Last_name, String Street, String City) {</span>
+<span class="fc" id="L30">        this.Person_ID = Person_ID;</span>
+<span class="fc" id="L31">        this.First_name = First_name;</span>
+<span class="fc" id="L32">        this.Last_name = Last_name;</span>
+<span class="fc" id="L33">        this.Street = Street;</span>
+<span class="fc" id="L34">        this.City = City;</span>
+<span class="fc" id="L35">    }</span>
+
+    /**
+     * @return the Person_ID
+     */
+    public int getPerson_ID() {
+<span class="fc" id="L41">        return Person_ID;</span>
+    }
+
+    /**
+     * @param Person_ID the Person_ID to set
+     */
+    public void setPerson_ID(int Person_ID) {
+<span class="fc" id="L48">        this.Person_ID = Person_ID;</span>
+<span class="fc" id="L49">    }</span>
+
+    /**
+     * @return the First_name
+     */
+    public String getFirst_name() {
+<span class="fc" id="L55">        return First_name;</span>
+    }
+
+    /**
+     * @param First_name the First_name to set
+     */
+    public void setFirst_name(String First_name) {
+<span class="fc" id="L62">        this.First_name = First_name;</span>
+<span class="fc" id="L63">    }</span>
+
+    /**
+     * @return the Last_name
+     */
+    public String getLast_name() {
+<span class="fc" id="L69">        return Last_name;</span>
+    }
+
+    /**
+     * @param Last_name the Last_name to set
+     */
+    public void setLast_name(String Last_name) {
+<span class="fc" id="L76">        this.Last_name = Last_name;</span>
+<span class="fc" id="L77">    }</span>
+
+    /**
+     * @return the Street
+     */
+    public String getStreet() {
+<span class="fc" id="L83">        return Street;</span>
+    }
+
+    /**
+     * @param Street the Street to set
+     */
+    public void setStreet(String Street) {
+<span class="fc" id="L90">        this.Street = Street;</span>
+<span class="fc" id="L91">    }</span>
+
+    /**
+     * @return the City
+     */
+    public String getCity() {
+<span class="fc" id="L97">        return City;</span>
+    }
+
+    /**
+     * @param City the City to set
+     */
+    public void setCity(String City) {
+<span class="fc" id="L104">        this.City = City;</span>
+<span class="fc" id="L105">    }</span>
+
+    /**
+     * This method Overrides the toString method of Object class. It creates
+     * visual representation as String object of Person class.
+     *
+     * @return String object with the complete details of the object.
+     */
+    @Override
+    public String toString() {
+
+<span class="fc" id="L116">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L117">        sb.append(&quot;---------------------&quot;)</span>
+                .append(System.lineSeparator())
+                .append(&quot;Person ID: &quot;).append(Person_ID)
+                .append(System.lineSeparator())
+                .append(&quot;First name: &quot;).append(First_name)
+                .append(System.lineSeparator())
+                .append(&quot;Last Name: &quot;).append(Last_name)
+                .append(System.lineSeparator())
+                .append(&quot;Street: &quot;).append(Street)
+                .append(System.lineSeparator())
+                .append(&quot;City: &quot;).append(City);
+<span class="fc" id="L128">        return sb.toString();</span>
+    }
+
+    /**
+     * This method Overrides equals method of Object class. This method checks
+     * the params 'obj' against null or instance or Person class then checks the
+     * object for their elements. This method uses Overridden hashCode method
+     * for this functionality.
+     *
+     * @param obj
+     * @return true if same or similar object with same elements, false if null,
+     * non-similar/same or similar object with different elements.
+     */
+    @Override
+    public boolean equals(Object obj) {
+<span class="fc bfc" id="L143" title="All 4 branches covered.">        if (obj == null || !(obj instanceof Person)) {</span>
+<span class="fc" id="L144">            return false;</span>
+        } else {
+<span class="fc bfc" id="L146" title="All 2 branches covered.">            if (obj == this) {</span>
+<span class="fc" id="L147">                return true;</span>
+            } else {
+<span class="fc bfc" id="L149" title="All 2 branches covered.">                return obj.hashCode() == this.hashCode();</span>
+            }
+        }
+    }
+
+    /**
+     * This method Overrides hashCode method of Object class. It calculates the
+     * hash value from the elements of the object.
+     *
+     * @return hash
+     */
+    @Override
+    public int hashCode() {
+<span class="fc" id="L162">        int hash = 5;</span>
+<span class="fc" id="L163">        hash = 23 * hash + this.Person_ID;</span>
+<span class="fc" id="L164">        hash = 23 * hash + Objects.hashCode(this.First_name);</span>
+<span class="fc" id="L165">        hash = 23 * hash + Objects.hashCode(this.Last_name);</span>
+<span class="fc" id="L166">        hash = 23 * hash + Objects.hashCode(this.Street);</span>
+<span class="fc" id="L167">        hash = 23 * hash + Objects.hashCode(this.City);</span>
+<span class="fc" id="L168">        return hash;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.4.201312101107</span></div></body></html>
