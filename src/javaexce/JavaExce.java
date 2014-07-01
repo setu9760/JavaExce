@@ -20,6 +20,10 @@ public class JavaExce {
      */
     public static void main(String[] args) {
         try {
+            
+            
+            
+            
             DataLayer.initConnection();
             FileParser parser = new FileParser(new File("raw/Order.data"), new File("raw/Person.data"));
             parser.order_parser();
